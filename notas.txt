@@ -1,0 +1,86 @@
+User
+Group
+Message
+Room/Chat
+Role
+UserGroup
+Session
+
+///
+Core:
+    Database
+    Views?
+    File Management
+    Socket
+    Log?
+
+Cruds:
+
+
+//////////////////////
+
+app/
+    src/
+        controllers
+        models
+        views
+        routes
+
+
+    package.json
+    app.js
+
+
+//Barush Method
+app/
+    src/
+        core/
+            database/
+            config/
+            log/
+            files/
+
+        modules/
+            users/
+                user.model.js //Schema
+                user.controller.js //Endpoint Methods
+                user.service.js (CRUD Actions)
+                user.routes.js
+                validations/
+                    login.validation
+                    ...
+        routes/
+            api.js
+    package.json
+    app.js
+
+
+GET api.com/usuarios (Endpoint)
+POST api.com/usuarios
+
+routes:
+    GET     /usuarios
+
+ROUTES
+// usuarios
+    GET     /usuarios => [authMiddleware, otroMiddleware] => userController.getAll
+    POST    /usuarios => userController.create
+    PUT     /usuarios => userController.update
+
+Models
+    User
+        () => {
+            DB.init('users')
+        }
+
+Users.Controller
+
+    getAll() {
+        return Database.query('users')
+    }
+
+    create(data) {
+        Model.create({
+            username: 'Juan'
+        })
+    }
