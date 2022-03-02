@@ -1,6 +1,6 @@
 const express = require('express');
 const path = require('path');
-const MongoClient = require('mongodb').MongoClient;
+const Database = require('./src/core/database.js');
 
 //Load Routes
 const apiRoutes = require('./src/routes/api.js');
@@ -20,7 +20,7 @@ app.use('/', (req, res) => {
 });
 
 //Connect to database
-const mongoURL = 'mongodb+srv://jpvaldesg:Hhu2m1jaKu2aTx04@cluster0.ta6mm.mongodb.net/iteso_2022?retryWrites=true&w=majority'
+/*const mongoURL = 'mongodb+srv://jpvaldesg:Hhu2m1jaKu2aTx04@cluster0.ta6mm.mongodb.net/iteso_2022?retryWrites=true&w=majority'
 MongoClient.connect(mongoURL, { useUnifiedTopology: true }, (err, client) => {
     //Error-first callback
     if(err) {
@@ -38,5 +38,12 @@ MongoClient.connect(mongoURL, { useUnifiedTopology: true }, (err, client) => {
         
         const collection = db.collection('user');
     }
-});
+});*/
 
+Database.connect().then(() => {
+    // Listen Port
+    const port = process.env.PORT || 3000;
+    app.listen(port, () => {
+        console.log('App is listening to port ' + port);
+    });
+});

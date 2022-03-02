@@ -1,7 +1,11 @@
+const User = require("./user.model");
+
 const UsersController = {
     getAll: (req, res) => {
-        //res.send('Get Users');
-        
+        const user = new User();
+        user.getAll().then((results) => {
+            res.send(results);
+        });
     },
     create: (req, res) => {
         res.send('User Crated');

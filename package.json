@@ -11,6 +11,7 @@
   "dependencies": {
     "express": "^4.17.3",
     "mogodb": "^0.0.1-security",
+    "mongodb": "^4.4.0",
     "nodemon": "^2.0.15"
   }
 }
