@@ -1,6 +1,7 @@
 const UsersController = {
     getAll: (req, res) => {
-        res.send('Get Users');
+        //res.send('Get Users');
+        
     },
     create: (req, res) => {
         res.send('User Crated');
