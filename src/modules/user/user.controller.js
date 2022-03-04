@@ -7,6 +7,16 @@ const UsersController = {
             res.send(results);
         });
     },
+    getOne: (req, res) => {
+        const user = new User();
+        user.getOne(req.params.id).then(result => {
+            if(result) {
+                res.send(result);
+            } else {
+                res.sendStatus(404);
+            }
+        });
+    },
     create: (req, res) => {
         res.send('User Crated');
     },

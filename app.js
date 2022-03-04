@@ -1,6 +1,9 @@
 const express = require('express');
 const path = require('path');
 const Database = require('./src/core/database.js');
+const dotenv = require('dotenv');
+
+dotenv.config();
 
 //Load Routes
 const apiRoutes = require('./src/routes/api.js');
@@ -9,9 +12,29 @@ const apiRoutes = require('./src/routes/api.js');
 const app = express();
 const port = process.env.PORT || 3000;
 
+//Swagger config
+const swaggerOptions = {
+    swaggerDefinition: {
+        swagger: '2.0',
+        info: {
+            title: 'ITESO Chat API',
+            description: 'A live chat web application',
+            version: '1.0.0',
+            servers: ['http://localhost:' + port]
+        }
+    },
+    apis: ['./src/modules/user/user.routes.js']
+}
+
+const swaggerJsDoc = require('swagger-jsdoc');
+const swaggerUi = require('swagger-ui-express');
+
+const swaggerDocs = swaggerJsDoc(swaggerOptions);
+app.use('/swagger', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
+
 //Use Route middlewares
 app.use('/assets', express.static(path.join(__dirname, 'public')));
-app.use('/', apiRoutes);
+app.use('/api', apiRoutes);
 
 //Set main endpoint
 app.use('/', (req, res) => {
@@ -20,30 +43,10 @@ app.use('/', (req, res) => {
 });
 
 //Connect to database
-/*const mongoURL = 'mongodb+srv://jpvaldesg:Hhu2m1jaKu2aTx04@cluster0.ta6mm.mongodb.net/iteso_2022?retryWrites=true&w=majority'
-MongoClient.connect(mongoURL, { useUnifiedTopology: true }, (err, client) => {
-    //Error-first callback
-    if(err) {
-        //Something failed
-        console.log('Algo fallo', err);
-    } else {
-        //Connected Succesfully
-        const db = client.db();
-        console.log('Database: ', db);
-
-        //Listen to port
-        app.listen(port, function() {
-            console.log('app is running in port ' + port + '...');
-        });
-        
-        const collection = db.collection('user');
-    }
-});*/
-
 Database.connect().then(() => {
     // Listen Port
-    const port = process.env.PORT || 3000;
     app.listen(port, () => {
         console.log('App is listening to port ' + port);
     });
 });
+
